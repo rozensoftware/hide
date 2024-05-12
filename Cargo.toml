@@ -1,0 +1,20 @@
+[package]
+name = "hide"
+description = "An installer that can hide a process in Windows OS and run it on system startup"
+version = "0.1.0"
+edition = "2021"
+keywords = ["installer", "spyware"]
+authors = ["Rozen Software <rozsoft@wp.pl>"]
+repository = "https://github.com/rozensoftware/hide"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+categories = ["command-line-utilities"]
+
+[dependencies]
+getopts = "0.2.21"
+winreg = "0.52"
+whoami = "1.5.1"
+
+[profile.release]
+strip = true
+panic = "abort"
