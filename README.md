@@ -9,6 +9,17 @@ This is a command that can help you to copy and autorun your payload in Widnows 
 The hide command can serve as a tool to copy, hide, and autorun your malware, virus, or other program in Windows OS.
 Administrator privileges are required to successfully run the program.
 
+## Features
+
+- Copy a payload to the System32 folder
+- Autorun a payload by writing a path to the registry
+- Autorun a payload by copying it to the Menu Autostart
+- Autorun a payload by creating a task in Windows Task Manager
+
+## Building
+
+Rust compiler is needed to build the command.
+
 ## Examples
 
 Copy a payload to the System32 folder and write its path to the run node of the Windows Registry
@@ -29,17 +40,6 @@ For this to work you have to have the *autorun.ps1* script in the same folder as
 ```bash
 ./hide -f virus.exe -o 3
 ```
-
-## Features
-
-- Copy a payload to the System32 folder
-- Autorun a payload by writing a path to the registry
-- Autorun a payload by copying it to the Menu Autostart
-- Autorun a payload by creating a task in Windows Task Manager
-
-## Building
-
-Rust compiler is needed to build the command.
 
 ## License
 

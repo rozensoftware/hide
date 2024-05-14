@@ -1,5 +1,5 @@
-mod payloadinstaller;
 mod auxiliary;
+mod payloadinstaller;
 
 extern crate getopts;
 
@@ -12,14 +12,12 @@ fn print_usage(program: &str, opts: getopts::Options) {
 }
 
 #[cfg(not(target_os = "windows"))]
-fn main() 
-{
+fn main() {
     panic!("This program is only for Windows");
 }
 
 #[cfg(target_os = "windows")]
-fn main() 
-{
+fn main() {
     //Read program arguments using getopts crate
 
     let args: Vec<String> = std::env::args().collect();
@@ -27,23 +25,30 @@ fn main()
     let mut opts = getopts::Options::new();
 
     //read option to hide the file
-    opts.reqopt("o", "option", "1. Registry autorun (System32 folder), 2. Startup folder, 3. Autorun Task", "How to hide a file");
-    
+    opts.reqopt(
+        "o",
+        "option",
+        "1. Registry autorun (System32 folder), 2. Startup folder, 3. Autorun Task",
+        "How to hide a file",
+    );
+
     //read required file name
     opts.reqopt("f", "file", "File to hide", "payload file name");
 
-    let matches = match opts.parse(&args[1..])
-    {
-        Ok(m) => { m }
-        Err(f) => { println!("{}", f); print_usage(&program, opts); return;}
+    let matches = match opts.parse(&args[1..]) {
+        Ok(m) => m,
+        Err(f) => {
+            println!("{}", f);
+            print_usage(&program, opts);
+            return;
+        }
     };
 
     let hide_option = matches.opt_str("o").unwrap().parse::<u8>().unwrap();
     let file_name = matches.opt_str("f").unwrap();
-    
+
     let installer = payloadinstaller::PayloadInstaller::new(hide_option, file_name);
-    match installer.run()
-    {
+    match installer.run() {
         Ok(_) => println!("Payload installed successfully"),
         Err(e) => println!("Error: {}", e),
     }
