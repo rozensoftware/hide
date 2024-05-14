@@ -139,7 +139,7 @@ impl PayloadInstaller {
         let program_to_copy = format!("{}\\{}", program_path, program_name);
         let aux = Auxiliary::new();
 
-        if aux.is_elevated() == false {
+        if !aux.is_elevated() {
             return Err(io::Error::new(
                 io::ErrorKind::PermissionDenied,
                 "This program must be run as administrator",
