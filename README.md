@@ -1,8 +1,8 @@
 # Hide
 
-Version: 0.1.0
+Version: 0.1.1
 
-This is a command that can help you to copy and autorun your payload in Widnows OS.
+This is a command that can help you to copy and autorun your payload in Windows OS.
 
 ## Purpose
 
@@ -11,10 +11,11 @@ Administrator privileges are required to successfully run the program.
 
 ## Features
 
-- Copy a payload to the System32 folder
-- Autorun a payload by writing a path to the registry
-- Autorun a payload by copying it to the Menu Autostart
-- Autorun a payload by creating a task in Windows Task Manager
+- Copies a payload to the System32 folder
+- Autoruns a payload by writing its path to the registry
+- Copies a payload to the Menu Autostart folder
+- Creates a task in Windows Task Manager to autorun a payload
+- Runs a payload after installing it
 
 ## Building
 
@@ -32,6 +33,12 @@ Copy a payload to the Autostart System Menu folder
 
 ```bash
 ./hide -f virus.exe -o 2
+```
+
+..and run it:
+
+```bash
+./hide -f virus.exe -o 2 -r
 ```
 
 Copy a payload to the System32 folder and create an autorun task in The Windows Task Manager.

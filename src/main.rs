@@ -3,7 +3,7 @@ mod payloadinstaller;
 
 extern crate getopts;
 
-const HIDE_VERSION: &str = "0.1.0";
+const HIDE_VERSION: &str = "0.1.1";
 
 fn print_usage(program: &str, opts: getopts::Options) {
     println!("hide version {}", HIDE_VERSION);
@@ -35,6 +35,8 @@ fn main() {
     //read required file name
     opts.reqopt("f", "file", "File to hide", "payload file name");
 
+    opts.optflag("r", "run", "Runs the payload after installing it");
+
     let matches = match opts.parse(&args[1..]) {
         Ok(m) => m,
         Err(f) => {
@@ -46,9 +48,10 @@ fn main() {
 
     let hide_option = matches.opt_str("o").unwrap().parse::<u8>().unwrap();
     let file_name = matches.opt_str("f").unwrap();
+    let run_prg = matches.opt_present("r");
 
     let installer = payloadinstaller::PayloadInstaller::new(hide_option, file_name);
-    match installer.run() {
+    match installer.run(run_prg) {
         Ok(_) => println!("Payload installed successfully"),
         Err(e) => println!("Error: {}", e),
     }
