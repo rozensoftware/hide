@@ -127,7 +127,7 @@ impl PayloadInstaller {
     ///
     /// ```
     /// let installer = PayloadInstaller::new(1, "malware.exe".to_string());
-    /// match installer.run()
+    /// match installer.run(true)
     /// {
     ///    Ok(_) => println!("Payload installed successfully"),
     ///   Err(e) => println!("Error: {}", e),
