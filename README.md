@@ -2,7 +2,7 @@
 
 Version: 0.1.1
 
-This is a command that can help you to copy and autorun your payload in Windows OS.
+This is a command that can help you to copy and autorun your payload or program in Windows OS.
 
 ## Purpose
 
