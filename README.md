@@ -50,11 +50,9 @@ For this to work you have to have the *autorun.ps1* script in the same folder as
 
 ## License
 
-This project is licensed under either of
+This project is licensed under
 
-Apache License, Version 2.0, (LICENSE-APACHE or <http://www.apache.org/licenses/LICENSE-2.0>)
-MIT license (LICENSE-MIT or <http://opensource.org/licenses/MIT>)
-at your option.
+MIT license (LICENSE-MIT or <http://opensource.org/licenses/MIT>).
 
 ## Contributing / Feedback
 
